@@ -206,6 +206,8 @@ if __name__ == "__main__":
             test_idx = list(range(args.test_idx_start, args.test_idx_end))
             test_data, test_labels = read_torch_text_labels(dataset_pair[1], test_idx)
         else:
+            print("random numbers")
+            print("something wrong happening here?")
             test_data, test_labels = pick_n_sample_from_each_class_given_dataset(
                 dataset_pair[1], args.num_test, test_idx_fn
             )
@@ -282,9 +284,12 @@ if __name__ == "__main__":
                         start_idx, end_idx = int(fn.split(".")[0].split("_")[-3]), int(
                             fn.split(".")[0].split("_")[-1]
                         )
+                        print(start_idx)
+                        print(end_idx)
                         sub_test_labels = test_labels[
                             start_idx:end_idx
                         ]  # assume all_test=True, all_train=True
+                        print("stop")
                         correct = non_neurl_knn_exp_given_dis(
                             dis_matrix, args.k, sub_test_labels, train_labels
                         )

@@ -202,6 +202,7 @@ class KnnExpText:
         correct = []
         pred = []
         if train_label is not None:
+            print("Using train label")
             compare_label = train_label
             start = 0
             end = k
