@@ -214,6 +214,10 @@ class KnnExpText:
         for i in range(len(self.distance_matrix)):
             sorted_idx = np.argsort(np.array(self.distance_matrix[i]))
             pred_labels = defaultdict(int)
+
+            print(len(sorted_idx))
+            print(len(compare_label))
+
             for j in range(start, end):
                 pred_l = compare_label[sorted_idx[j]]
                 pred_labels[pred_l] += 1
