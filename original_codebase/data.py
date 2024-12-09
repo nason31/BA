@@ -153,10 +153,10 @@ def load_ohsumed_single(local_directory: str) -> tuple:
     Returns:
         tuple: Pair of training and testing datasets.
     """
-
+    print(str.split(local_directory, "/"))
     def process(data_directory: str) -> list:
         dataset = []
-
+        print()
         # TODO: Replace with `glob` to crawl files into a list.
         for directory_name in os.listdir(data_directory):
             subdirectory_path = os.path.join(data_directory, directory_name)
@@ -168,11 +168,15 @@ def load_ohsumed_single(local_directory: str) -> tuple:
                     if os.path.isfile(filepath):
                         text = open(filepath).read().strip()
                         dataset.append((label, text))
+        print(dataset)
         return dataset
 
     train_dir = os.path.join(local_directory, "training")
     test_dir = os.path.join(local_directory, "test")
     train_ds, test_ds = process(train_dir), process(test_dir)
+    print("loading ohsumed")
+    print(train_ds)
+    print(test_ds)
     return train_ds, test_ds
 
 
@@ -203,7 +207,7 @@ def load_ohsumed(data_directory: str, split: float = 0.9) -> tuple:
                     train_ds.append((label, text))
                 else:
                     test_ds.append((label, text))
-
+    
     return train_ds, test_ds
 
 
@@ -226,7 +230,6 @@ def load_r8(data_directory: str, delimiter: str = "\t") -> tuple:
             label, text = row.split(delimiter)
             processed_data.append((label, text))
         return processed_data
-
     test_fn = os.path.join(data_directory, "test.txt")
     train_fn = os.path.join(data_directory, "train.txt")
     train_ds, test_ds = process(train_fn), process(test_fn)
@@ -323,6 +326,7 @@ def load_filipino(data_directory) -> tuple:
     """
 
     def process(fn):
+        print("loading filipino")
         pairs = []
         with open(fn, "r") as f:
             reader = csv.reader(f, delimiter=",", quotechar='"')

@@ -37,7 +37,7 @@ def non_neural_knn_exp(
     knn_exp_ins = KnnExpText(agg_func, cp, dis_func)
     start = time.time()
     if para:
-        with Pool(5) as p:
+        with Pool(16) as p:
             pred_correct_pair = p.map(
                 partial(knn_exp_ins.combine_dis_acc_single, k, train_data, train_label),
                 test_data,
@@ -74,7 +74,7 @@ def record_distance(
     knn_exp = KnnExpText(agg_func, cp, dis_func)
     start = time.time()
     if para:
-        with Pool(6) as p:
+        with Pool(16) as p:
             distance_for_selected_test = p.map(
                 partial(knn_exp.calc_dis_single_multi, train_data), test_data
             )
@@ -210,6 +210,7 @@ if __name__ == "__main__":
                 dataset_pair[1], args.num_test, test_idx_fn
             )
     else:
+        print("all test data")
         train_pair, test_pair = dataset_pair[0], dataset_pair[1]
         test_data, test_labels = read_torch_text_labels(
             test_pair, range(len(test_pair))
@@ -225,11 +226,13 @@ if __name__ == "__main__":
                 dataset_pair[0], args.num_train, train_idx_fn
             )
     else:
+        print("all train data")
         train_pair, test_pair = dataset_pair[0], dataset_pair[1]
         train_data, train_labels = read_torch_text_labels(
             train_pair, range(len(train_pair))
         )
     if not args.record:
+        print("knn experiment")
         non_neural_knn_exp(
             args.compressor,
             test_data,
@@ -242,9 +245,11 @@ if __name__ == "__main__":
             para=args.para,
         )
     else:
+        print("record distance")
         if not args.score:
             if args.test_idx_start is None:
                 start_idx = 0
+                print("start from 0")
             else:
                 start_idx = args.test_idx_start
             for i in range(0, len(test_data), 100):
@@ -266,11 +271,13 @@ if __name__ == "__main__":
                     para=args.para,
                 )
         else:
+            print("score")
             if os.path.isdir(args.distance_fn):
                 all_correct = 0
                 total_num = 0
                 for fn in tqdm(os.listdir(args.distance_fn)):
                     if fn.endswith(".npy"):
+                        print("check")
                         dis_matrix = np.load(os.path.join(args.distance_fn, fn))
                         start_idx, end_idx = int(fn.split(".")[0].split("_")[-3]), int(
                             fn.split(".")[0].split("_")[-1]
@@ -284,6 +291,8 @@ if __name__ == "__main__":
                         all_correct += sum(correct)
                         total_num += len(correct)
                         del dis_matrix
+                print(all_correct)
+                print(total_num)
                 print("Altogether Accuracy is: {}".format(all_correct / total_num))
             else:
                 dis_matrix = np.load(args.distance_fn)
