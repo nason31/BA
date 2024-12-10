@@ -313,6 +313,7 @@ def load_swahili() -> tuple:
     return train_ds, test_ds
 
 
+
 def load_filipino(data_directory) -> tuple:
     """
     Loads the Dengue Filipino dataset from local directory
@@ -325,7 +326,7 @@ def load_filipino(data_directory) -> tuple:
         tuple: Tuple of lists containing the training and testing datasets respectively.
     """
 
-    def process(fn):
+    """ def process(fn):
         print("loading filipino")
         pairs = []
         with open(fn, "r") as f:
@@ -341,7 +342,18 @@ def load_filipino(data_directory) -> tuple:
 
     train_ds, test_ds = process(os.path.join(data_directory, "train.csv")), process(
         os.path.join(data_directory, "test.csv")
-    )
+    ) """
+    def process(dataset: Iterable) -> list:
+        pairs = []
+        for pair in dataset:
+            label = pair["dengue"]
+            text = pair["text"]
+            pairs.append((label, text))
+        return pairs
+
+    ds = load_dataset("dengue_filipino")
+    print(ds)
+    train_ds, test_ds = process(ds["train"]), process(ds["test"])
     return train_ds, test_ds
 
 
@@ -490,6 +502,7 @@ def pick_n_sample_from_each_class_given_dataset(
 
     if index_only:
         return np.array(recorded_idx), labels
+    print(result)
     return result, labels
 
 

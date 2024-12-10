@@ -211,13 +211,12 @@ class KnnExpText:
             start = 1
             end = k + 1
 
+        print(len(compare_label))
+        print(len(self.distance_matrix))
+
         for i in range(len(self.distance_matrix)):
             sorted_idx = np.argsort(np.array(self.distance_matrix[i]))
             pred_labels = defaultdict(int)
-
-            print(len(sorted_idx))
-            print(len(compare_label))
-
             for j in range(start, end):
                 pred_l = compare_label[sorted_idx[j]]
                 pred_labels[pred_l] += 1
@@ -243,6 +242,8 @@ class KnnExpText:
             pred.append(most_label)
             correct.append(if_right)
         print("Accuracy is {}".format(sum(correct) / len(correct)))
+        print("Correct: ", sum(correct))
+        print("Total: ", len(correct))
         return pred, correct
 
     def combine_dis_acc(
