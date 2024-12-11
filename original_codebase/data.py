@@ -235,9 +235,9 @@ def load_r8(data_directory: str, delimiter: str = "\t") -> tuple:
     train_ds, test_ds = process(train_fn), process(test_fn)
     return train_ds, test_ds
 
-
+""" 
 def load_trec(data_directory: str) -> tuple:
-    """
+    
     Loads the TREC dataset from a directory.
 
     Arguments:
@@ -245,7 +245,7 @@ def load_trec(data_directory: str) -> tuple:
 
     Returns:
         tuple: Tuple of lists containing the training and testing datasets respectively.
-    """
+    
 
     def process(filename: str) -> list:
         processed_data = []
@@ -260,7 +260,7 @@ def load_trec(data_directory: str) -> tuple:
     train_fn = os.path.join(data_directory, "train.txt")
     train_ds, test_ds = process(train_fn), process(test_fn)
     return train_ds, test_ds
-
+ """
 
 def load_kinnews_kirnews(
     dataset_name: str = "kinnews_kirnews", data_split: str = "kinnews_cleaned"
@@ -314,7 +314,7 @@ def load_swahili() -> tuple:
 
 
 
-def load_filipino(data_directory) -> tuple:
+def load_filipino() -> tuple:
     """
     Loads the Dengue Filipino dataset from local directory
 
@@ -356,6 +356,77 @@ def load_filipino(data_directory) -> tuple:
     train_ds, test_ds = process(ds["train"]), process(ds["test"])
     return train_ds, test_ds
 
+def load_yahooAnswers() -> tuple:
+    """
+    Loads the YahooAnswers dataset from huggingface datasets
+
+    :ref:
+    """
+    def process(dataset: Iterable) -> list:
+        pairs = []
+        for pair in dataset:
+            label = pair["topic"]
+            text = pair["best_answer"]
+            pairs.append((label, text))
+        return pairs
+    
+    ds = load_dataset("yahoo_answers_topics")
+    train_ds, test_ds = process(ds["train"]), process(ds["test"])
+    return train_ds, test_ds
+
+def load_ag_news() -> tuple:
+    """
+    Loads the AG News dataset from huggingface datasets
+
+    :ref:
+    """
+    def process(dataset: Iterable) -> list:
+        pairs = []
+        for pair in dataset:
+            label = pair["label"]
+            text = pair["text"]
+            pairs.append((label, text))
+        return pairs
+    
+    ds = load_dataset("ag_news")
+    train_ds, test_ds = process(ds["train"]), process(ds["test"])
+    return train_ds, test_ds
+
+def load_trec() -> tuple:
+    """
+    Loads the TREC dataset from huggingface datasets
+
+    :ref:
+    """
+    def process(dataset: Iterable) -> list:
+        pairs = []
+        for pair in dataset:
+            label = pair["coarse_label"]
+            text = pair["text"]
+            pairs.append((label, text))
+        return pairs
+    
+    ds = load_dataset("trec")
+    train_ds, test_ds = process(ds["train"]), process(ds["test"])
+    return train_ds, test_ds
+
+def load_emotion() -> tuple:
+    """
+    Loads the Emotion dataset from huggingface datasets
+
+    :ref:
+    """
+    def process(dataset: Iterable) -> list:
+        pairs = []
+        for pair in dataset:
+            label = pair["label"]
+            text = pair["text"]
+            pairs.append((label, text))
+        return pairs
+    
+    ds = load_dataset("emotion")
+    train_ds, test_ds = process(ds["train"]), process(ds["test"])
+    return train_ds, test_ds
 
 def read_img_with_label(
     dataset: list, indices: Sequence[int], flatten: bool = True

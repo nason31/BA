@@ -151,10 +151,14 @@ if __name__ == "__main__":
         "filipino": 5,
         "kirnews": 14,
         "custom": args.class_num,
+        "trec": 6,
+        "emotion": 6,
     }
     # load dataset
     data_dir = os.path.join(args.data_dir, args.dataset)
     if args.dataset not in [
+        "AG_NEWS",
+        "YahooAnswers",
         "20News",
         "Ohsumed",
         "Ohsumed_single",
@@ -165,6 +169,8 @@ if __name__ == "__main__":
         "filipino",
         "kirnews",
         "custom",
+        "trec",
+        "emotion",
     ]:
         dataset_pair = eval(args.dataset)(root=args.data_dir)
     else:
@@ -188,6 +194,14 @@ if __name__ == "__main__":
             dataset_pair = load_swahili()
         elif args.dataset == "filipino":
             dataset_pair = load_filipino(args.data_dir)
+        elif args.dataset == "YahooAnswers":
+            dataset_pair = load_yahooAnswers()
+        elif args.dataset == "AG_NEWS":
+            dataset_pair = load_ag_news()
+        elif args.dataset == "trec":
+            dataset_pair = load_trec()
+        elif args.dataset == "emotion":
+            dataset_pair = load_emotion()
         else:
             dataset_pair = load_custom_dataset(args.data_dir)
     num_classes = ds2classes[args.dataset]
