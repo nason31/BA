@@ -235,32 +235,6 @@ def load_r8(data_directory: str, delimiter: str = "\t") -> tuple:
     train_ds, test_ds = process(train_fn), process(test_fn)
     return train_ds, test_ds
 
-""" 
-def load_trec(data_directory: str) -> tuple:
-    
-    Loads the TREC dataset from a directory.
-
-    Arguments:
-        data_directory (str): Directory containing the TREC dataset.
-
-    Returns:
-        tuple: Tuple of lists containing the training and testing datasets respectively.
-    
-
-    def process(filename: str) -> list:
-        processed_data = []
-        with open(filename, encoding="ISO-8859-1") as file:
-            reader = csv.reader(file, delimiter=":")
-            for row in reader:
-                label, text = row[0], row[1]
-                processed_data.append((label, text))
-        return processed_data
-
-    test_fn = os.path.join(data_directory, "test.txt")
-    train_fn = os.path.join(data_directory, "train.txt")
-    train_ds, test_ds = process(train_fn), process(test_fn)
-    return train_ds, test_ds
- """
 
 def load_kinnews_kirnews(
     dataset_name: str = "kinnews_kirnews", data_split: str = "kinnews_cleaned"
@@ -316,33 +290,9 @@ def load_swahili() -> tuple:
 
 def load_filipino() -> tuple:
     """
-    Loads the Dengue Filipino dataset from local directory
-
-    :ref: https://github.com/jcblaisecruz02/Filipino-Text-Benchmarks#datasets
-
-    Arguments:
-        data_directory (str): Directory containing Dengue Filipino dataset
-    Returns:
-        tuple: Tuple of lists containing the training and testing datasets respectively.
+    Loads the Filipino dataset from huggingface datasets
     """
-
-    """ def process(fn):
-        print("loading filipino")
-        pairs = []
-        with open(fn, "r") as f:
-            reader = csv.reader(f, delimiter=",", quotechar='"')
-            for row in reader:
-                text = row[0]
-                for i in range(1, 6):
-                    if row[i] == "1":
-                        label = i - 1
-                        pairs.append((label, text))
-                        break
-        return pairs
-
-    train_ds, test_ds = process(os.path.join(data_directory, "train.csv")), process(
-        os.path.join(data_directory, "test.csv")
-    ) """
+    
     def process(dataset: Iterable) -> list:
         pairs = []
         for pair in dataset:
@@ -378,7 +328,6 @@ def load_ag_news() -> tuple:
     """
     Loads the AG News dataset from huggingface datasets
 
-    :ref:
     """
     def process(dataset: Iterable) -> list:
         pairs = []
@@ -396,7 +345,6 @@ def load_trec() -> tuple:
     """
     Loads the TREC dataset from huggingface datasets
 
-    :ref:
     """
     def process(dataset: Iterable) -> list:
         pairs = []
@@ -414,7 +362,6 @@ def load_emotion() -> tuple:
     """
     Loads the Emotion dataset from huggingface datasets
 
-    :ref:
     """
     def process(dataset: Iterable) -> list:
         pairs = []
