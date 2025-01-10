@@ -370,8 +370,9 @@ def load_emotion() -> tuple:
             text = pair["text"]
             pairs.append((label, text))
         return pairs
+
+    ds = load_dataset("dair-ai/emotion", download_mode="force_redownload", ignore_verifications=True)
     
-    ds = load_dataset("emotion")
     train_ds, test_ds = process(ds["train"]), process(ds["test"])
     return train_ds, test_ds
 
