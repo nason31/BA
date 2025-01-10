@@ -37,7 +37,7 @@ def non_neural_knn_exp(
     knn_exp_ins = KnnExpText(agg_func, cp, dis_func)
     start = time.time()
     if para:
-        with Pool(16) as p:
+        with Pool(24) as p:
             pred_correct_pair = p.map(
                 partial(knn_exp_ins.combine_dis_acc_single, k, train_data, train_label),
                 test_data,
@@ -74,7 +74,7 @@ def record_distance(
     knn_exp = KnnExpText(agg_func, cp, dis_func)
     start = time.time()
     if para:
-        with Pool(16) as p:
+        with Pool(24) as p:
             distance_for_selected_test = p.map(
                 partial(knn_exp.calc_dis_single_multi, train_data), test_data
             )
