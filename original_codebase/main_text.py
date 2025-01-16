@@ -180,8 +180,10 @@ if __name__ == "__main__":
             dataset_pair = load_ohsumed(args.data_dir)
         elif args.dataset == "Ohsumed_single":
             dataset_pair = load_ohsumed_single(args.data_dir)
-        elif args.dataset == "R8" or args.dataset == "R52":
-            dataset_pair = load_r8(args.data_dir)
+        elif args.dataset == "R8":
+            dataset_pair = load_r8()
+        elif args.dataset == "R52":
+            dataset_pair = load_r52()
         elif args.dataset == "kinnews":
             dataset_pair = load_kinnews_kirnews(
                 dataset_name="kinnews_kirnews", data_split="kinnews_cleaned"

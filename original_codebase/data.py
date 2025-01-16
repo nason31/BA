@@ -211,8 +211,8 @@ def load_ohsumed(data_directory: str, split: float = 0.9) -> tuple:
     return train_ds, test_ds
 
 
-def load_r8(data_directory: str, delimiter: str = "\t") -> tuple:
-    """
+""" def load_r8(data_directory: str, delimiter: str = "\t") -> tuple:
+    
     Loads the R8 dataset.
 
     Arguments:
@@ -221,7 +221,7 @@ def load_r8(data_directory: str, delimiter: str = "\t") -> tuple:
 
     Returns:
         tuple: Tuple of lists containing the training and testing datasets respectively.
-    """
+    
 
     def process(filename: str) -> list:
         processed_data = []
@@ -233,8 +233,41 @@ def load_r8(data_directory: str, delimiter: str = "\t") -> tuple:
     test_fn = os.path.join(data_directory, "test.txt")
     train_fn = os.path.join(data_directory, "train.txt")
     train_ds, test_ds = process(train_fn), process(test_fn)
+    return train_ds, test_ds """
+
+def load_r8() -> tuple:
+    """
+    Load the R8 dataset from huggingface datasets.
+    """
+
+    def process(dataset: Iterable) -> list:
+        pairs = []
+        for pair in dataset:
+            label = pair["label"]
+            text = pair["text"]
+            pairs.append((label, text))
+        return pairs
+
+    ds = load_dataset("dxgp/r8")
+    train_ds, test_ds = process(ds["train"]), process(ds["test"])
     return train_ds, test_ds
 
+def load_r52() -> tuple:
+    """
+    Load the R52 dataset from huggingface datasets.
+    """
+
+    def process(dataset: Iterable) -> list:
+        pairs = []
+        for pair in dataset:
+            label = pair["label"]
+            text = pair["text"]
+            pairs.append((label, text))
+        return pairs
+
+    ds = load_dataset("dxgp/r52")
+    train_ds, test_ds = process(ds["train"]), process(ds["test"])
+    return train_ds, test_ds
 
 def load_kinnews_kirnews(
     dataset_name: str = "kinnews_kirnews", data_split: str = "kinnews_cleaned"
@@ -372,7 +405,7 @@ def load_emotion() -> tuple:
         return pairs
 
     ds = load_dataset("dair-ai/emotion", download_mode="force_redownload", ignore_verifications=True)
-    
+
     train_ds, test_ds = process(ds["train"]), process(ds["test"])
     return train_ds, test_ds
 
