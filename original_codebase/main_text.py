@@ -3,6 +3,7 @@ import time
 from functools import partial
 from typing import Callable
 
+from group import *
 from compressors import *
 from data import *
 from experiments import *
@@ -120,9 +121,11 @@ if __name__ == "__main__":
     parser.add_argument("--test_idx_end", type=int, default=None)
     parser.add_argument("--distance_fn", default=None)
     parser.add_argument("--score", action="store_true", default=False)
-    parser.add_argument("--k", default=2, type=int)
+    parser.add_argument("--k", default=100, type=int)
     parser.add_argument("--class_num", default=5, type=int)
     parser.add_argument("--random", action="store_true", default=False)
+    parser.add_argument("--group", default=False)
+    parser.add_argument("--group_num", default=10, type=int)
     args = parser.parse_args()
     # create output dir
     if not os.path.exists(args.output_dir):
@@ -195,7 +198,7 @@ if __name__ == "__main__":
         elif args.dataset == "swahili":
             dataset_pair = load_swahili()
         elif args.dataset == "filipino":
-            dataset_pair = load_filipino(args.data_dir)
+            dataset_pair = load_filipino()
         elif args.dataset == "YahooAnswers":
             dataset_pair = load_yahooAnswers()
         elif args.dataset == "AG_NEWS":
@@ -247,6 +250,12 @@ if __name__ == "__main__":
         train_data, train_labels = read_torch_text_labels(
             train_pair, range(len(train_pair))
         )
+        print(train_labels)
+
+    if args.group:
+        print("group")
+        train_data, train_labels = group_train_data(train_data, train_labels, args.group_num)
+        print("grouped")
     if not args.record:
         print("knn experiment")
         non_neural_knn_exp(
