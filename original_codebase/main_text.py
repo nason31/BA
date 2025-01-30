@@ -3,7 +3,7 @@ import time
 from functools import partial
 from typing import Callable
 
-from group import *
+
 from compressors import *
 from data import *
 from experiments import *
