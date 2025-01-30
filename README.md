@@ -1,32 +1,14 @@
-# Code for Paper: “Low-Resource” Text Classification: A Parameter-Free Classification Method with Compressors
+# Code for Thesis: A Non-Parametric Text Classification Approach Utilizing Lossless Compression Models
 
 This paper is accepted to Findings of [ACL2023](https://aclanthology.org/2023.findings-acl.426/).
-
-## Getting Started
-
-This codebase is [available on pypi.org via](https://pypi.org/project/npc-gzip):
-
-
-```sh
-pip install npc-gzip
-```
-
-
-## Testing
-
-This package utilizes `poetry` to maintain its dependencies and `pytest` to execute tests. To get started running the tests:
-
-```sh
-poetry shell
-poetry install
-pytest
-```
 
 -------------------------
 
 ### Original Codebase
 
 #### Require
+
+Installation of Conda or Miniconda.
 
 See `requirements.txt`.
 
@@ -69,11 +51,3 @@ python main_text.py --record --score --distance_fn <DISTANCE DIR>
 ```
 
 to calculate accuracy. Otherwise, the accuracy will be calculated automatically using the command in the last section.
-
-#### Use Custom Dataset
-
-You can use your own custom dataset by passing `custom` to `--dataset`; pass the data directory that contains `train.txt` and `test.txt` to `--data_dir`; pass the class number to the `--class_num`.
-
-Both `train.txt` and `test.txt` are expected to have the format `{label}\t{text}` per line.
-
-You can change the delimiter according to you dataset by changing `delimiter` in `load_custom_dataset()` in `data.py`.

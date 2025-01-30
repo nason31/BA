@@ -259,11 +259,9 @@ if __name__ == "__main__":
             para=args.para,
         )
     else:
-        print("record distance")
         if not args.score:
             if args.test_idx_start is None:
                 start_idx = 0
-                print("start from 0")
             else:
                 start_idx = args.test_idx_start
             for i in range(0, len(test_data), 100):
@@ -285,7 +283,6 @@ if __name__ == "__main__":
                     para=args.para,
                 )
         else:
-            print("score")
             if os.path.isdir(args.distance_fn):
                 all_correct = 0
                 total_num = 0
