@@ -385,54 +385,6 @@ def load_emotion() -> tuple:
     train_ds, test_ds = process(ds["train"]), process(ds["test"])
     return train_ds, test_ds
 
-def read_img_with_label(
-    dataset: list, indices: Sequence[int], flatten: bool = True
-) -> tuple:
-    """
-    Loads items from `dataset` based on the indices listed in `indices`
-    and optionally flattens them.
-
-    Arguments:
-        dataset (list): List of images.
-        indices (list): indices of `dataset` to be returned.
-        flatten (bool): [Optional] Optionally flatten the image.
-
-    Returns:
-        tuple: (np.ndarray, np.ndarray) of images and labels respectively
-
-    """
-    imgs = []
-    labels = []
-    for idx in indices:
-        img = np.array(dataset[idx][0])
-        label = dataset[idx][1]
-        if flatten:
-            img = img.flatten()
-        imgs.append(img)
-        labels.append(label)
-
-    return np.array(imgs), np.array(labels)
-
-
-def read_img_label(dataset: list, indices: Sequence[int]) -> list:
-    """
-    Given an image dataset and a list of indices,
-    this function returns the labels from the dataset.
-
-    Arguments:
-        dataset (list): List of images.
-        indices (list): indices of `dataset` to be returned.
-
-    Returns:
-        list: Image labels.
-    """
-
-    labels = []
-    for idx in indices:
-        label = dataset[idx][1]
-        labels.append(label)
-    return labels
-
 
 def pick_n_sample_from_each_class(
     filename: str, n_samples: int, idx_only: bool = False

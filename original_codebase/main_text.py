@@ -121,11 +121,9 @@ if __name__ == "__main__":
     parser.add_argument("--test_idx_end", type=int, default=None)
     parser.add_argument("--distance_fn", default=None)
     parser.add_argument("--score", action="store_true", default=False)
-    parser.add_argument("--k", default=100, type=int)
+    parser.add_argument("--k", default=2, type=int)
     parser.add_argument("--class_num", default=5, type=int)
     parser.add_argument("--random", action="store_true", default=False)
-    parser.add_argument("--group", default=False)
-    parser.add_argument("--group_num", default=10, type=int)
     args = parser.parse_args()
     # create output dir
     if not os.path.exists(args.output_dir):
@@ -229,7 +227,6 @@ if __name__ == "__main__":
                 dataset_pair[1], args.num_test, test_idx_fn
             )
     else:
-        print("all test data")
         train_pair, test_pair = dataset_pair[0], dataset_pair[1]
         test_data, test_labels = read_torch_text_labels(
             test_pair, range(len(test_pair))
@@ -245,19 +242,11 @@ if __name__ == "__main__":
                 dataset_pair[0], args.num_train, train_idx_fn
             )
     else:
-        print("all train data")
         train_pair, test_pair = dataset_pair[0], dataset_pair[1]
         train_data, train_labels = read_torch_text_labels(
             train_pair, range(len(train_pair))
         )
-        print(train_labels)
-
-    if args.group:
-        print("group")
-        train_data, train_labels = group_train_data(train_data, train_labels, args.group_num)
-        print("grouped")
     if not args.record:
-        print("knn experiment")
         non_neural_knn_exp(
             args.compressor,
             test_data,
