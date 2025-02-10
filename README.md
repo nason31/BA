@@ -1,6 +1,6 @@
 # Code for Thesis: A Non-Parametric Text Classification Approach Utilizing Lossless Compression Models
 
-This paper is accepted to Findings of [ACL2023](https://aclanthology.org/2023.findings-acl.426/).
+This codebase is the extension of https://github.com/bazingagin/npc_gzip, which was provided with the examined paper.
 
 -------------------------
 
@@ -30,7 +30,7 @@ By default, this will only use 100 test and training samples per class as a quic
 
 ```text
 --compressor <gzip, lzw>
---dataset <AG_NEWS, DBpedia, YahooAnswers, 20News, R8, R52, kinnews, kirnews, swahili, filipino> [Note that for small datasets like kinnews, default 100-shot is too big, need to set --num_test and --num_train.]
+--dataset <AG_NEWS, DBpedia, YahooAnswers, 20News, R8, R52, kinnews, kirnews, swahili, filipino, trec, emotion>
 --num_train <INT>
 --num_test <INT>
 --all_test [This will use the whole test dataset.]
@@ -42,6 +42,8 @@ By default, this will only use 100 test and training samples per class as a quic
 --output_dir <DIR> [The output directory to save information of tested indices or distance matrix.]
 ```
 
+Example: --dataset trec --all_test --all_train --para (for calculation of accuracy)
+--dataset trec --all_test --all_train --record --para --output_dir xxx (for saving of the calculated NCD)
 #### Calculate Accuracy (Optional)
 
 If we want to calculate accuracy from recorded distance file `<DISTANCE DIR>`, use
