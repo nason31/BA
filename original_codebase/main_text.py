@@ -161,8 +161,6 @@ if __name__ == "__main__":
         "AG_NEWS",
         "YahooAnswers",
         "20News",
-        "Ohsumed",
-        "Ohsumed_single",
         "R8",
         "R52",
         "kinnews",
@@ -177,10 +175,6 @@ if __name__ == "__main__":
     else:
         if args.dataset == "20News":
             dataset_pair = load_20news()
-        elif args.dataset == "Ohsumed":
-            dataset_pair = load_ohsumed(args.data_dir)
-        elif args.dataset == "Ohsumed_single":
-            dataset_pair = load_ohsumed_single(args.data_dir)
         elif args.dataset == "R8":
             dataset_pair = load_r8()
         elif args.dataset == "R52":
